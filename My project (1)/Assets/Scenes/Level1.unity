@@ -9750,6 +9750,11 @@ MonoBehaviour:
   menuOpcionesPanel: {fileID: 1072972916}
   jugador: {fileID: 1845723953}
   pauseMenu: {fileID: 948662313}
+  portraitImage: {fileID: 1958965467}
+  playerHealth: {fileID: 3909570792428442311}
+  fullHealthSprite: {fileID: 0}
+  mediumHealthSprite: {fileID: 0}
+  lowHealthSprite: {fileID: 0}
 --- !u!114 &948662313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19581,6 +19586,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1979896171158248605, guid: 39a118859d17ac845b224a274f708d09,
+        type: 3}
+      propertyPath: currentHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2736836670075880285, guid: 39a118859d17ac845b224a274f708d09,
         type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -19611,6 +19621,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39a118859d17ac845b224a274f708d09, type: 3}
+--- !u!114 &3909570792428442311 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1979896171158248605, guid: 39a118859d17ac845b224a274f708d09,
+    type: 3}
+  m_PrefabInstance: {fileID: 3909570792428442310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845723953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ce555b6c7c1d242a3bb743a4da0c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
