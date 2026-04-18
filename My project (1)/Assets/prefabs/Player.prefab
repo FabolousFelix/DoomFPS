@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 7439667996142485493}
   - component: {fileID: 2736836670075880285}
   - component: {fileID: 7428657877768694395}
-  - component: {fileID: 2518676012246060521}
+  - component: {fileID: 1979896171158248605}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -400,7 +400,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   initialMaterial: {fileID: 2100000, guid: 9128f22d89138ad46ae96bc84b9ff2f3, type: 2}
   detectedMaterial: {fileID: 2100000, guid: 4df0d4a1da8cf644d9f3a79dcc80a8c4, type: 2}
---- !u!114 &2518676012246060521
+--- !u!114 &1979896171158248605
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -409,11 +409,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4968696677909647667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b3333e452b5ef04ab0aacbba2f809ee, type: 3}
+  m_Script: {fileID: 11500000, guid: b1ce555b6c7c1d242a3bb743a4da0c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  health: 0
+  currentHealth: 0
 --- !u!1 &6258787335086646342
 GameObject:
   m_ObjectHideFlags: 0

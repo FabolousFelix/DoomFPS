@@ -6,9 +6,12 @@ public class PlayerHealth : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
 
+    public System.Action OnHealthChanged;
+
     void Start()
     {
         currentHealth = maxHealth;
+        OnHealthChanged?.Invoke();
     }
 
     public void TakeDamage(float damage)
