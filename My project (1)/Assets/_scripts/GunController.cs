@@ -14,10 +14,17 @@ public class GunController : MonoBehaviour
     private bool canShoot;
 
     public AudioSource audioSource;
+    public Transform weaponHolder;
+    private GameObject currentWeaponModel;
 
     [Header("Enemy Test Materials")]
     public Material initialMaterial;
     public Material detectedMaterial;
+
+    [Header("Ammo Runtime")]
+    private int currentAmmo;
+    private int currentReserve;
+    private bool isReloading;
 
     void Awake()
     {
@@ -33,17 +40,50 @@ public class GunController : MonoBehaviour
 
     void Start()
     {
-        gunTrigger = GetComponent<BoxCollider>();
+    
+    gunTrigger = GetComponent<BoxCollider>();
         canShoot = true;
+
+        //arma default lol
+        if (weapon != null)
+        {
+            ChangeWeapon(weapon);
+        }
         SetTrigger();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         Fire();
+
+        //pa recargar al presionar r lol
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Reload());
+        }
     }
 
+    public void ChangeWeapon(Weapons newWeapon)
+    {
+        weapon = newWeapon;
+        currentAmmo = weapon.maxAmmo;
+        currentReserve = weapon.maxReserve;
+        // destruir modelo actual
+        if (currentWeaponModel != null)
+        {
+            Destroy(currentWeaponModel);
+        }
+
+        // instanciar nuevo modelo
+        if (weapon.weaponPrefab != null)
+        {
+            currentWeaponModel = Instantiate(weapon.weaponPrefab, weaponHolder);
+        }
+
+        SetTrigger();
+    }
     public void SetTrigger()
     {
         gunTrigger.size = new Vector3(weapon.horizontalRange, weapon.verticalRange, weapon.range);
@@ -52,18 +92,32 @@ public class GunController : MonoBehaviour
 
     public void Fire()
     {
-        if (Input.GetKeyDown(KeyCode.Space)&& canShoot == true)
+        if (Input.GetKeyDown(KeyCode.Space) && canShoot && !isReloading)
         {
+            //primero verificar enemigos pq estaba disparando al aire lol
+            if (EnemyManager.instance.enemiesInRange.Count == 0)
+            {
+                Debug.Log("No hay enemigos, no dispara");
+                return;
+            }
+
+            //luego verificar munición
+            if (currentAmmo <= 0)
+            {
+                Debug.Log("Sin munición");
+                return;
+            }
+
             audioSource.PlayOneShot(weapon.sound);
 
-            foreach(Enemy enemy in EnemyManager.instance.enemiesInRange)
+            foreach (Enemy enemy in EnemyManager.instance.enemiesInRange)
             {
                 var dir = (enemy.transform.position - transform.position).normalized;
                 RaycastHit hit;
 
-                if(Physics.Raycast(transform.position, dir, out hit, weapon.range * 1.5f, rayscastLayer)) 
+                if (Physics.Raycast(transform.position, dir, out hit, weapon.range * 1.5f, rayscastLayer))
                 {
-                    if(hit.transform == enemy.transform)
+                    if (hit.transform == enemy.transform)
                     {
                         Quaternion rot = Quaternion.LookRotation(-hit.normal);
                         enemy.Damage(weapon.damage, rot);
@@ -75,6 +129,40 @@ public class GunController : MonoBehaviour
 
             StartCoroutine(CanFire(weapon.fireRate));
         }
+    }
+
+    //añadir municion 
+    public void AddAmmo(int amount)
+    {
+
+        Debug.Log("Munición actual: " + currentReserve);
+        currentReserve += amount;
+    }
+
+    IEnumerator Reload()
+    {
+        if (isReloading) yield break;
+        if (currentAmmo == weapon.maxAmmo) yield break;
+        if (currentReserve <= 0) yield break;
+
+        isReloading = true;
+
+        yield return new WaitForSeconds(weapon.reloadTime);
+
+        int neededAmmo = weapon.maxAmmo - currentAmmo;
+
+        if (currentReserve >= neededAmmo)
+        {
+            currentAmmo += neededAmmo;
+            currentReserve -= neededAmmo;
+        }
+        else
+        {
+            currentAmmo += currentReserve;
+            currentReserve = 0;
+        }
+
+        isReloading = false;
     }
 
     IEnumerator CanFire (float time)

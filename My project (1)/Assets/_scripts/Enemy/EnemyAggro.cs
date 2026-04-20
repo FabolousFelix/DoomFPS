@@ -9,6 +9,9 @@ public class EnemyAggro : MonoBehaviour
 
     [HideInInspector] public Transform playerTransform;
 
+    public float attackCooldown = 1.5f;
+    private float nextAttackTime = 0f;
+
     //[HideInInspector] public Animator animator;
 
     private EnemyAttack enemyAttack;
@@ -27,7 +30,9 @@ public class EnemyAggro : MonoBehaviour
     {
         CheckEnemyAggro();
         //AnimationChange();
+        EnemyDamage();
     }
+
 
     public void CheckEnemyAggro()
     {
@@ -42,19 +47,27 @@ public class EnemyAggro : MonoBehaviour
             isAggro = true;
         }
     }
+
+        public void EnemyDamage()
+    {
+
+        //se añadio un cooldown pal ataque
+        if(enemyAttack.isAttacking && Time.time >= nextAttackTime)
+    {
+            //pequeño cambio por que doña pendeja decidio hacer el take damage de player health con float y casi se caga el codigo ya que daba problemas con el int lol 
+            playerTransform.GetComponent<PlayerHealth>().TakeDamage(10f);
+
+
+            //nose bro lol mentira, esto es pa que solo haga daño si ya paso el tiempo
+            nextAttackTime = Time.time + attackCooldown;
+
+            Debug.Log(playerTransform.GetComponent<PlayerHealth>().maxHealth);
+        }
+    }
     /*
     public void AnimationChange()
     {
         animator.SetBool("isChasing", isAggro);
     }
-
-    /
-    public void EnemyDamage()
-    {
-        if (enemyAttack.isAttacking)
-        {
-            playerTransform.GetComponent<PlayerStats>().PlayerDamage();
-            Debug.Log(playerTransform.GetComponent<PlayerStats>().health);
-        }
-    }*/
+    */
 }

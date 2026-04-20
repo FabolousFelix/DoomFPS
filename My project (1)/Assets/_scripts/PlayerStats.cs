@@ -29,4 +29,17 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void Heal(int amount)
+    {
+        health += amount;
+
+        // evitar que se pase del máximo
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+
+        Debug.Log("Curado: " + amount + " | Vida actual: " + health);
+    }
+
 }

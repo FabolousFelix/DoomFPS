@@ -50,6 +50,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        //se llama en update para que funcione el metodo
        EnemyMovement();
     }
 
