@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class GunController : MonoBehaviour
@@ -62,6 +62,7 @@ public class GunController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(Reload());
+
         }
     }
 
@@ -101,12 +102,15 @@ public class GunController : MonoBehaviour
                 return;
             }
 
-            //luego verificar munición
+            //luego verificar municiÃ³n
             if (currentAmmo <= 0)
             {
-                Debug.Log("Sin munición");
+                Debug.Log("Sin municiÃ³n");
                 return;
             }
+
+            currentAmmo--;
+            Debug.Log("Disparo = Ammo: " + currentAmmo);
 
             audioSource.PlayOneShot(weapon.sound);
 
@@ -131,11 +135,11 @@ public class GunController : MonoBehaviour
         }
     }
 
-    //añadir municion 
+    //aÃ±adir municion 
     public void AddAmmo(int amount)
     {
 
-        Debug.Log("Munición actual: " + currentReserve);
+        Debug.Log("MuniciÃ³n actual: " + currentReserve);
         currentReserve += amount;
     }
 
@@ -146,6 +150,9 @@ public class GunController : MonoBehaviour
         if (currentReserve <= 0) yield break;
 
         isReloading = true;
+
+        Debug.Log("INICIO RECARGA");
+        Debug.Log("ANTES = Ammo: " + currentAmmo + " | Reserve: " + currentReserve);
 
         yield return new WaitForSeconds(weapon.reloadTime);
 
@@ -161,6 +168,8 @@ public class GunController : MonoBehaviour
             currentAmmo += currentReserve;
             currentReserve = 0;
         }
+
+        Debug.Log("DESPUÃ‰S = Ammo: " + currentAmmo + " | Reserve: " + currentReserve);
 
         isReloading = false;
     }
