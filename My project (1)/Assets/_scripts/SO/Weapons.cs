@@ -12,6 +12,12 @@ public class Weapons : ScriptableObject
     public int horizontalRange;
     public float fireRate;
     public int damage;
+    public GameObject weaponPrefab;
     public AudioClip sound;
+
+    [Header("Ammo")]
+    public int maxAmmo;      // cargador
+    public int maxReserve;   // munición total extra
+    public float reloadTime;
 
 }

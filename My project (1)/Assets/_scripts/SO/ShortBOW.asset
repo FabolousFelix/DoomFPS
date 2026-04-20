@@ -10,11 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd20cbb59608a8846837db38b17747e4, type: 3}
-  m_Name: Revolver
+  m_Name: ShortBOW
   m_EditorClassIdentifier: 
-  range: 6
+  range: 10
   verticalRange: 5
   horizontalRange: 2
   fireRate: 0.7
   damage: 5
-  sound: {fileID: 8300000, guid: cde64170084eaee45ba01244de1771e7, type: 3}
+  weaponPrefab: {fileID: 1824063057357235827, guid: ca922bdcb06fbb24dbded34165b82972,
+    type: 3}
+  sound: {fileID: 8300000, guid: 472e50ef97f417b4995606775e5a7a88, type: 3}
+  maxAmmo: 30
+  maxReserve: 50
+  reloadTime: 2
