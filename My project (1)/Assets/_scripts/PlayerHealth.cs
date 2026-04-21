@@ -8,23 +8,45 @@ public class PlayerHealth : MonoBehaviour
 
     public System.Action OnHealthChanged;
 
+    [Header("Escudo")]
+    public float maxShield = 50f;
+    public float currentShield;
+
     void Start()
     {
         currentHealth = maxHealth;
+        currentShield = maxShield;
+
         OnHealthChanged?.Invoke();
     }
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        float remainingDamage = damage;
 
-        Debug.Log("Daño recibido: " + damage + " | Vida: " + currentHealth);
+        //primero absorbe el escudo
+        if (currentShield > 0)
+        {
+            float shieldDamage = Mathf.Min(currentShield, remainingDamage);
+            currentShield -= shieldDamage;
+            remainingDamage -= shieldDamage;
+        }
+
+        //luego afecta la vida
+        if (remainingDamage > 0)
+        {
+            currentHealth -= remainingDamage;
+            currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        }
+
+        Debug.Log($"Escudo: {currentShield} | Vida: {currentHealth}");
 
         if (currentHealth <= 0)
         {
             Die();
         }
+
+        OnHealthChanged?.Invoke();
     }
 
     public void Heal(float amount)
@@ -33,6 +55,15 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
         Debug.Log("Curación: " + amount + " | Vida: " + currentHealth);
+    }
+
+    public void HealShield(float amount)
+    {
+        currentShield = Mathf.Clamp(currentShield + amount, 0, maxShield);
+
+        Debug.Log("Escudo curado: " + amount + " | Escudo actual: " + currentShield);
+
+        OnHealthChanged?.Invoke();
     }
 
     void Die()
