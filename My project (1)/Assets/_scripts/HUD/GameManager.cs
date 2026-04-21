@@ -34,6 +34,12 @@ public class GameManager : MonoBehaviour
         UpdatePortrait();
     }
 
+    void Update()
+    {
+        // Aquí podrías agregar lógica para detectar si el jugador muere y mostrar el menú de muerte, etc.
+        UpdatePortrait();
+    }
+
     void PausarJuego(bool pausar)
     {
         Time.timeScale = pausar ? 0f : 1f;
@@ -91,6 +97,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void VolverAlMenuPrincipalConReinicio()
+    {
+        // Recargar la escena actual para reiniciar todo el nivel
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex
+        );
+        // Nota: después de recargar, se ejecutará Start() del GameManager nuevamente,
+        // donde ya está configurado el menú principal y la pausa.
+    }
+
     //PlayerPortrait
 
     [Header("Referencias")]
@@ -117,7 +133,6 @@ public class GameManager : MonoBehaviour
         else  // 25% o menos ? vida baja
             portraitImage.sprite = lowHealthSprite;
     }
-
 
     
     public void SalirJuego()
