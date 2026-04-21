@@ -16,7 +16,7 @@ MonoBehaviour:
   verticalRange: 5
   horizontalRange: 2
   fireRate: 0.7
-  damage: 5
+  damage: 18
   weaponPrefab: {fileID: 1824063057357235827, guid: ca922bdcb06fbb24dbded34165b82972,
     type: 3}
   sound: {fileID: 8300000, guid: 472e50ef97f417b4995606775e5a7a88, type: 3}
