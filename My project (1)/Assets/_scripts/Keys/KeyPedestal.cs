@@ -13,11 +13,15 @@ public class KeyPedestal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Si no es el jugador o ya está activado, no hace nada
         if (!other.CompareTag("Player") || isActivated) return;
 
+        // Verifica si el jugador tiene la llave correcta
         if (HasCorrectKey())
         {
+            // Coloca la llave en el pedestal
             PlaceKey();
+            // Marca el pedestal como activado
             isActivated = true;
 
             Debug.Log("Llave colocada en pedestal");
@@ -27,7 +31,7 @@ public class KeyPedestal : MonoBehaviour
             Debug.Log("No tienes la llave correcta");
         }
     }
-
+    // Revisa si el jugador tiene la llave correspondiente
     bool HasCorrectKey()
     {
         switch (keyType)
@@ -39,10 +43,12 @@ public class KeyPedestal : MonoBehaviour
         return false;
     }
 
+    // Coloca la llave y actualiza todo el sistema
     void PlaceKey()
     {
         Debug.Log("Colocando llave tipo: " + keyType);
 
+        // Según el tipo de llave, la elimina del inventario del jugador
         switch (keyType)
         {
             case 0:
@@ -64,7 +70,7 @@ public class KeyPedestal : MonoBehaviour
                 break;
         }
 
-        //instanciar prefab
+        // Instancia el modelo visual de la llave en el pedestal
         if (keyVisual != null)
         {
             GameObject key = Instantiate(keyVisual, transform);
@@ -74,7 +80,7 @@ public class KeyPedestal : MonoBehaviour
         {
             Debug.LogError("keyVisual no asignado");
         }
-
+        // Reproduce el sonido de colocación de llave
         if (audioSource != null && placeKeySound != null)
         {
             audioSource.PlayOneShot(placeKeySound);

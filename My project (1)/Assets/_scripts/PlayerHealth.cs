@@ -63,14 +63,14 @@ public class PlayerHealth : MonoBehaviour
     {
         if (healthText != null)
         {
-            healthText.text = $"{currentHealth}"; // O usa el formato que prefieras
+            healthText.text = $"{currentHealth}"; 
         }
     }
     private void UpdateArmorUI()
     {
         if (armorText != null)
         {
-            armorText.text = $"{currentShield}"; // O usa el formato que prefieras
+            armorText.text = $"{currentShield}";
         }
     }
 
@@ -99,7 +99,6 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player muerto");
         //añadir luego la ui y respawn que si funcione esta vez xd
 
-        // Ejemplo simple:
         StartCoroutine(DeathSequence());
         gameObject.SetActive(false);
         OnPlayerDeath?.Invoke();

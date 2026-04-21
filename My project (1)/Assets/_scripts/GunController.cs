@@ -52,8 +52,6 @@ public class GunController : MonoBehaviour
         SetTrigger();
 
     }
-
-    // Update is called once per frame
     void Update()
     {
         Fire();
@@ -145,19 +143,23 @@ public class GunController : MonoBehaviour
 
     IEnumerator Reload()
     {
+        // Si ya está recargando, no hace nada
         if (isReloading) yield break;
+        // Si el cargador ya está lleno, no recarga
         if (currentAmmo == weapon.maxAmmo) yield break;
+        // Si no hay munición en reserva, no recarga
         if (currentReserve <= 0) yield break;
-
+        // Activa estado de recarga
         isReloading = true;
 
         Debug.Log("INICIO RECARGA");
         Debug.Log("ANTES = Ammo: " + currentAmmo + " | Reserve: " + currentReserve);
 
+        // Espera el tiempo de recarga del arma
         yield return new WaitForSeconds(weapon.reloadTime);
 
         int neededAmmo = weapon.maxAmmo - currentAmmo;
-
+        // Si hay suficiente reserva para llenar el cargador
         if (currentReserve >= neededAmmo)
         {
             currentAmmo += neededAmmo;
@@ -165,6 +167,7 @@ public class GunController : MonoBehaviour
         }
         else
         {
+            // Si no hay suficiente, usa toda la reserva
             currentAmmo += currentReserve;
             currentReserve = 0;
         }
