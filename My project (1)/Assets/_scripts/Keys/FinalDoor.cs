@@ -8,6 +8,10 @@ public class FinalDoor : MonoBehaviour
 
     public GameObject door;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip openDoorSound;
+
     private bool opened = false;
 
     void Update()
@@ -35,9 +39,14 @@ public class FinalDoor : MonoBehaviour
     {
         Debug.Log("PUERTA ABIERTA");
 
+        if (audioSource != null && openDoorSound != null)
+        {
+            audioSource.PlayOneShot(openDoorSound);
+        }
+
         if (door != null)
         {
-            Destroy(door);
+            Destroy(door, 1.5f); // delay para que el audio se escuche
         }
     }
 }

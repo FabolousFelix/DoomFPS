@@ -16,10 +16,10 @@ MonoBehaviour:
   verticalRange: 10
   horizontalRange: 5
   fireRate: 0.3
-  damage: 45
+  damage: 35
   weaponPrefab: {fileID: 605717786696487499, guid: 811caf75269614741a510e356b5c56ca,
     type: 3}
   sound: {fileID: 8300000, guid: a7af756f8ac6cda4db49d25d8d34c3b4, type: 3}
   maxAmmo: 40
-  maxReserve: 80
-  reloadTime: 0.8
+  maxReserve: 70
+  reloadTime: 1

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
+  damage: 15
 --- !u!135 &3385633953718861000
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -261,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a4d78d528f8ca4cbce65dd604fa7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  health: 100
   blood: {fileID: 3845928707943772322, guid: 3e13c4604c5bd74449a4bfb5359fe108, type: 3}
 --- !u!114 &6128780393700207417
 MonoBehaviour:
@@ -294,6 +295,7 @@ MonoBehaviour:
   distanceToAggro: 8
   playerTransform: {fileID: 0}
   attackCooldown: 1.5
+  animator: {fileID: 0}
 --- !u!195 &7880320621556388779
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -304,7 +306,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5000001
-  m_Speed: 3.5
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

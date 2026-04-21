@@ -5,6 +5,8 @@ public class KeyPedestal : MonoBehaviour
     public int keyType; // 0 = roja, 1 = azul, 2 = morada
 
     public bool isActivated = false;
+    public AudioSource audioSource;
+    public AudioClip placeKeySound;
 
     [Header("Visual")]
     public GameObject keyVisual; //llave que aparece encima)
@@ -39,24 +41,43 @@ public class KeyPedestal : MonoBehaviour
 
     void PlaceKey()
     {
+        Debug.Log("Colocando llave tipo: " + keyType);
+
         switch (keyType)
         {
             case 0:
                 Stats.hasRedKey = false;
-                KeyManager.instance.redKeyImage.SetActive(false);
+                if (KeyManager.instance != null)
+                    KeyManager.instance.redKeyImage.SetActive(false);
                 break;
+
             case 1:
                 Stats.hasBlueKey = false;
-                KeyManager.instance.blueKeyImage.SetActive(false);
+                if (KeyManager.instance != null)
+                    KeyManager.instance.blueKeyImage.SetActive(false);
                 break;
+
             case 2:
                 Stats.hasPurpleKey = false;
-                KeyManager.instance.purpleKeyImage.SetActive(false);
+                if (KeyManager.instance != null)
+                    KeyManager.instance.purpleKeyImage.SetActive(false);
                 break;
         }
 
-        // mostrar llave en pedestal
+        //instanciar prefab
         if (keyVisual != null)
-            keyVisual.SetActive(true);
+        {
+            GameObject key = Instantiate(keyVisual, transform);
+            key.transform.localPosition = new Vector3(0, 1.5f, 0);
+        }
+        else
+        {
+            Debug.LogError("keyVisual no asignado");
+        }
+
+        if (audioSource != null && placeKeySound != null)
+        {
+            audioSource.PlayOneShot(placeKeySound);
+        }
     }
 }

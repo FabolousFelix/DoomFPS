@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public GameObject menuOpcionesPanel;
     public GameObject jugador;
     public PauseMenu pauseMenu;  // Arrastra el objeto que tiene el script PauseMenu
-
+    public EndGameTrigger endGameTrigger;
     private bool juegoIniciado = false;
 
     void Start()
@@ -94,6 +94,11 @@ public class GameManager : MonoBehaviour
         {
             pauseMenu.pausePanel.SetActive(false);
             pauseMenu.SetGameStarted(false);
+        }
+
+        if (endGameTrigger != null)
+        {
+            endGameTrigger.HideEndGame();
         }
     }
 
