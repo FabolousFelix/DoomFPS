@@ -55,6 +55,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
         Debug.Log("Curación: " + amount + " | Vida: " + currentHealth);
+        OnHealthChanged?.Invoke();
     }
 
     public void HealShield(float amount)
