@@ -1,10 +1,11 @@
-
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
     private EnemyAggro enemyAggro;
     [HideInInspector] public bool isAttacking;
+    //variante de daño pq la cague con el player health y lo puse en float 
+    public float damage = 15f;
 
     private void Start()
     {
@@ -31,5 +32,4 @@ public class EnemyAttack : MonoBehaviour
             Debug.Log("Is Not Attacking");
         }
     }
-
 }

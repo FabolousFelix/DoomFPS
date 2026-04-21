@@ -1,43 +1,35 @@
-
 using UnityEngine;
-
 public class EnemyAggro : MonoBehaviour
 {
-    public bool isAggro;
-
-    public float distanceToAggro = 8f;
-
-    [HideInInspector] public Transform playerTransform;
-
-    public float attackCooldown = 1.5f;
+    public bool isAggro; public float distanceToAggro = 8f;
+    [HideInInspector] public Transform playerTransform; public float attackCooldown = 1.5f;
     private float nextAttackTime = 0f;
-
-    //[HideInInspector] public Animator animator;
-
+    [HideInInspector] public Animator animator;
     private EnemyAttack enemyAttack;
 
+    //variable para acceder al boss
+    private BossAttack bossAttack;
+    private PlayerHealth playerHealth;
     private void Start()
     {
-        if (playerTransform == null)
-            playerTransform = FindAnyObjectByType<PlayerMovement>().transform;
-
+        if (playerTransform == null) playerTransform = FindAnyObjectByType<PlayerMovement>().transform;
         enemyAttack = GetComponentInChildren<EnemyAttack>();
+        playerHealth = playerTransform.GetComponent<PlayerHealth>();
+
+        //acceder al boss basicamente lol
+        bossAttack = GetComponent<BossAttack>();
         //animator = GetComponent<Animator>();
         isAggro = false;
     }
-
     private void Update()
     {
         CheckEnemyAggro();
         //AnimationChange();
         EnemyDamage();
     }
-
-
     public void CheckEnemyAggro()
     {
         var dist = Vector3.Distance(transform.position, playerTransform.position);
-        
         if (dist > distanceToAggro)
         {
             isAggro = false;
@@ -47,27 +39,23 @@ public class EnemyAggro : MonoBehaviour
             isAggro = true;
         }
     }
-
-        public void EnemyDamage()
+    public void EnemyDamage()
     {
+        if (enemyAttack.isAttacking && Time.time >= nextAttackTime)
+        {
+            //si es boss usa su propio ataque
+            if (bossAttack != null)
+            {
+                bossAttack.TryAttack(enemyAttack.isAttacking);
+            }
+            else
+            {
+                // enemigo normal con cambios a enemy attack pq la cague con el codigo de playerhealth xd
+                playerHealth.TakeDamage(enemyAttack.damage);
+            }
 
-        //se añadio un cooldown pal ataque
-        if(enemyAttack.isAttacking && Time.time >= nextAttackTime)
-    {
-            //pequeño cambio por que doña pendeja decidio hacer el take damage de player health con float y casi se caga el codigo ya que daba problemas con el int lol 
-            playerTransform.GetComponent<PlayerHealth>().TakeDamage(10f);
-
-
-            //nose bro lol mentira, esto es pa que solo haga daño si ya paso el tiempo
             nextAttackTime = Time.time + attackCooldown;
-
-            Debug.Log(playerTransform.GetComponent<PlayerHealth>().maxHealth);
         }
+        /* public void AnimationChange() { animator.SetBool("isChasing", isAggro); } */
     }
-    /*
-    public void AnimationChange()
-    {
-        animator.SetBool("isChasing", isAggro);
-    }
-    */
 }
