@@ -55,10 +55,11 @@ public class PlayerHealth : MonoBehaviour
         {
             Die();
         }
+
         UpdateHealthUI(); // Actualiza el texto al curarse
         OnHealthChanged?.Invoke();
     }
-
+    // Actualiza texto de vida
     private void UpdateHealthUI()
     {
         if (healthText != null)
@@ -66,6 +67,7 @@ public class PlayerHealth : MonoBehaviour
             healthText.text = $"{currentHealth}"; 
         }
     }
+    // Actualiza texto de escudo
     private void UpdateArmorUI()
     {
         if (armorText != null)
@@ -73,10 +75,11 @@ public class PlayerHealth : MonoBehaviour
             armorText.text = $"{currentShield}";
         }
     }
-
+    // Curar vida
     public void Heal(float amount)
     {
         currentHealth += amount;
+        // Limita al máximo
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
         Debug.Log("Curación: " + amount + " | Vida: " + currentHealth);
@@ -84,6 +87,7 @@ public class PlayerHealth : MonoBehaviour
         OnHealthChanged?.Invoke();
     }
 
+    // Curar escudo
     public void HealShield(float amount)
     {
         currentShield = Mathf.Clamp(currentShield + amount, 0, maxShield);
@@ -94,19 +98,23 @@ public class PlayerHealth : MonoBehaviour
         OnHealthChanged?.Invoke();
     }
 
+    // Método de muerte
     void Die()
     {
         Debug.Log("Player muerto");
-        //añadir luego la ui y respawn que si funcione esta vez xd
 
+        // Inicia secuencia de muerte
         StartCoroutine(DeathSequence());
+        // Desactiva el jugador inmediatamente
         gameObject.SetActive(false);
+        // Lanza evento de muerte
         OnPlayerDeath?.Invoke();
     }
 
     private System.Collections.IEnumerator DeathSequence()
     {
         // Aquí puedes reproducir una animación, sonido, etc.
+        // Espera 1 segundo (para efectos/animaciones)
         yield return new WaitForSeconds(1f);
         OnPlayerDeath?.Invoke();
     }

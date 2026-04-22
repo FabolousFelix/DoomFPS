@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd20cbb59608a8846837db38b17747e4, type: 3}
   m_Name: ShortBOW
   m_EditorClassIdentifier: 
-  range: 10
+  range: 5
   verticalRange: 5
   horizontalRange: 2
   fireRate: 0.7

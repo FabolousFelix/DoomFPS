@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd20cbb59608a8846837db38b17747e4, type: 3}
   m_Name: MagicStaff
   m_EditorClassIdentifier: 
-  range: 25
+  range: 15
   verticalRange: 10
   horizontalRange: 5
   fireRate: 0.3
