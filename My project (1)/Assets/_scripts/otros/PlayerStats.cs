@@ -18,24 +18,32 @@ public class PlayerStats : MonoBehaviour
 
     public void PlayerDamage()
     {
-        if(health > 1)
+        // Si tiene más de 1 de vida
+        if (health > 1)
         {
-            health --; 
+            // Reduce la vida en 1
+            health--; 
             Debug.Log(health);
 
-        }else if(health == 1)
+
+        }
+        // Si la vida está en 1, el siguiente golpe lo mata
+        else if (health == 1)
         {
             Debug.Log("Personaje Muere");
         }
     }
 
+    // Método para curar al jugador
     public void Heal(int amount)
     {
+        // Suma la cantidad de vida
         health += amount;
 
         // evitar que se pase del máximo
         if (health > maxHealth)
         {
+
             health = maxHealth;
         }
 
