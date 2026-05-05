@@ -19,7 +19,7 @@ public class EnemyAttack : MonoBehaviour
         {
             //enemyAggro.animator.SetBool("Attack", true);
             isAttacking = true;
-            Debug.Log("Is Attacking");
+            
         }
     }
 
@@ -29,7 +29,7 @@ public class EnemyAttack : MonoBehaviour
         {
             //enemyAggro.animator.SetBool("Attack", false);
             isAttacking = false;
-            Debug.Log("Is Not Attacking");
+           
         }
     }
 }
