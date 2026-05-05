@@ -71,7 +71,7 @@ public class BossAttack : MonoBehaviour
 
             //ACTIVAR INVULNERABILIDAD
             enemy.SetInvulnerable(true);
-            Debug.Log("Boss INVULNERABLE");
+            
 
             //activar partículas
             if (invulParticles != null)
@@ -81,7 +81,7 @@ public class BossAttack : MonoBehaviour
 
             //DESACTIVAR INVULNERABILIDAD
             enemy.SetInvulnerable(false);
-            Debug.Log("Boss VULNERABLE");
+           
 
             //detener partículas
             if (invulParticles != null)

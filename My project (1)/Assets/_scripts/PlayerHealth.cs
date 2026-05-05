@@ -49,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
         }
 
-        Debug.Log($"Escudo: {currentShield} | Vida: {currentHealth}");
+        
 
         if (currentHealth <= 0)
         {
@@ -113,7 +113,6 @@ public class PlayerHealth : MonoBehaviour
 
     private System.Collections.IEnumerator DeathSequence()
     {
-        // Aquí puedes reproducir una animación, sonido, etc.
         // Espera 1 segundo (para efectos/animaciones)
         yield return new WaitForSeconds(1f);
         OnPlayerDeath?.Invoke();

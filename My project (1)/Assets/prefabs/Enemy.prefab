@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   blood: {fileID: 3845928707943772322, guid: 3e13c4604c5bd74449a4bfb5359fe108, type: 3}
+  pointsOnDeath: 15
 --- !u!114 &6128780393700207417
 MonoBehaviour:
   m_ObjectHideFlags: 0
