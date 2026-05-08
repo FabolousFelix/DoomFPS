@@ -40,22 +40,23 @@ public class GunController : MonoBehaviour
 
     void Start()
     {
-    
-    gunTrigger = GetComponent<BoxCollider>();
+        // Obtiene el BoxCollider del arma
+        gunTrigger = GetComponent<BoxCollider>();
+        //permite disparars
         canShoot = true;
 
-        //arma default lol
+        // Asigna arma inicial
         if (weapon != null)
         {
             ChangeWeapon(weapon);
         }
+        // Ajusta el trigger según el arma
         SetTrigger();
 
     }
-
-    // Update is called once per frame
     void Update()
     {
+        //Disparo
         Fire();
 
         //pa recargar al presionar r lol
@@ -65,10 +66,11 @@ public class GunController : MonoBehaviour
 
         }
     }
-
+    // Cambia el arma
     public void ChangeWeapon(Weapons newWeapon)
     {
         weapon = newWeapon;
+        // Inicializa munición
         currentAmmo = weapon.maxAmmo;
         currentReserve = weapon.maxReserve;
         // destruir modelo actual
@@ -85,6 +87,7 @@ public class GunController : MonoBehaviour
 
         SetTrigger();
     }
+    // Ajusta el tamaño del trigger según el arma
     public void SetTrigger()
     {
         gunTrigger.size = new Vector3(weapon.horizontalRange, weapon.verticalRange, weapon.range);
@@ -108,12 +111,13 @@ public class GunController : MonoBehaviour
                 Debug.Log("Sin munición");
                 return;
             }
-
+            // Consume bala
             currentAmmo--;
             Debug.Log("Disparo = Ammo: " + currentAmmo);
-
+            // Sonido
             audioSource.PlayOneShot(weapon.sound);
 
+            // Dispara a todos los enemigos en rango
             foreach (Enemy enemy in EnemyManager.instance.enemiesInRange)
             {
                 var dir = (enemy.transform.position - transform.position).normalized;
@@ -130,7 +134,7 @@ public class GunController : MonoBehaviour
                     Debug.DrawRay(transform.position, dir * weapon.range, Color.green, 1f);
                 }
             }
-
+            // Aplica cooldown de disparo
             StartCoroutine(CanFire(weapon.fireRate));
         }
     }
@@ -145,19 +149,23 @@ public class GunController : MonoBehaviour
 
     IEnumerator Reload()
     {
+        // Si ya está recargando, no hace nada
         if (isReloading) yield break;
+        // Si el cargador ya está lleno, no recarga
         if (currentAmmo == weapon.maxAmmo) yield break;
+        // Si no hay munición en reserva, no recarga
         if (currentReserve <= 0) yield break;
-
+        // Activa estado de recarga
         isReloading = true;
 
         Debug.Log("INICIO RECARGA");
         Debug.Log("ANTES = Ammo: " + currentAmmo + " | Reserve: " + currentReserve);
 
+        // Espera el tiempo de recarga del arma
         yield return new WaitForSeconds(weapon.reloadTime);
 
         int neededAmmo = weapon.maxAmmo - currentAmmo;
-
+        // Si hay suficiente reserva para llenar el cargador
         if (currentReserve >= neededAmmo)
         {
             currentAmmo += neededAmmo;
@@ -165,6 +173,7 @@ public class GunController : MonoBehaviour
         }
         else
         {
+            // Si no hay suficiente, usa toda la reserva
             currentAmmo += currentReserve;
             currentReserve = 0;
         }
@@ -173,7 +182,7 @@ public class GunController : MonoBehaviour
 
         isReloading = false;
     }
-
+    // Cooldown de disparo
     IEnumerator CanFire (float time)
     {
         canShoot = false;
@@ -181,7 +190,8 @@ public class GunController : MonoBehaviour
         canShoot = true;
     }
 
-   private void OnTriggerEnter(Collider other)
+    // Detecta enemigos en rango
+    private void OnTriggerEnter(Collider other)
     {
         Enemy enemy = other.GetComponent<Enemy>();
 

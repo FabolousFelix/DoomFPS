@@ -5,17 +5,23 @@ public class KeyPedestal : MonoBehaviour
     public int keyType; // 0 = roja, 1 = azul, 2 = morada
 
     public bool isActivated = false;
+    public AudioSource audioSource;
+    public AudioClip placeKeySound;
 
     [Header("Visual")]
     public GameObject keyVisual; //llave que aparece encima)
 
     private void OnTriggerEnter(Collider other)
     {
+        // Si no es el jugador o ya está activado, no hace nada
         if (!other.CompareTag("Player") || isActivated) return;
 
+        // Verifica si el jugador tiene la llave correcta
         if (HasCorrectKey())
         {
+            // Coloca la llave en el pedestal
             PlaceKey();
+            // Marca el pedestal como activado
             isActivated = true;
 
             Debug.Log("Llave colocada en pedestal");
@@ -25,7 +31,7 @@ public class KeyPedestal : MonoBehaviour
             Debug.Log("No tienes la llave correcta");
         }
     }
-
+    // Revisa si el jugador tiene la llave correspondiente
     bool HasCorrectKey()
     {
         switch (keyType)
@@ -37,26 +43,47 @@ public class KeyPedestal : MonoBehaviour
         return false;
     }
 
+    // Coloca la llave y actualiza todo el sistema
     void PlaceKey()
     {
+        Debug.Log("Colocando llave tipo: " + keyType);
+
+        // Según el tipo de llave, la elimina del inventario del jugador
         switch (keyType)
         {
             case 0:
                 Stats.hasRedKey = false;
-                KeyManager.instance.redKeyImage.SetActive(false);
+                if (KeyManager.instance != null)
+                    KeyManager.instance.redKeyImage.SetActive(false);
                 break;
+
             case 1:
                 Stats.hasBlueKey = false;
-                KeyManager.instance.blueKeyImage.SetActive(false);
+                if (KeyManager.instance != null)
+                    KeyManager.instance.blueKeyImage.SetActive(false);
                 break;
+
             case 2:
                 Stats.hasPurpleKey = false;
-                KeyManager.instance.purpleKeyImage.SetActive(false);
+                if (KeyManager.instance != null)
+                    KeyManager.instance.purpleKeyImage.SetActive(false);
                 break;
         }
 
-        // mostrar llave en pedestal
+        // Instancia el modelo visual de la llave en el pedestal
         if (keyVisual != null)
-            keyVisual.SetActive(true);
+        {
+            GameObject key = Instantiate(keyVisual, transform);
+            key.transform.localPosition = new Vector3(0, 1.5f, 0);
+        }
+        else
+        {
+            Debug.LogError("keyVisual no asignado");
+        }
+        // Reproduce el sonido de colocación de llave
+        if (audioSource != null && placeKeySound != null)
+        {
+            audioSource.PlayOneShot(placeKeySound);
+        }
     }
 }

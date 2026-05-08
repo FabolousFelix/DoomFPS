@@ -26,18 +26,22 @@ public class BossAttack : MonoBehaviour
 
     private void Start()
     {
+        // Busca al jugador en escena
         player = FindAnyObjectByType<PlayerMovement>().transform;
-
+        // Obtiene componentes del jugador
         playerHealth = player.GetComponent<PlayerHealth>();
         playerMovement = player.GetComponent<PlayerMovement>();
+        // Obtiene el script Enemy del boss
         enemy = GetComponent<Enemy>();
+        // Inicia el ciclo de invulnerabilidad del boss
         StartCoroutine(InvulnerabilityCycle());
     }
 
     public void TryAttack(bool isAttacking)
     {
+        // Si no está en estado de ataque, no hace nada
         if (!isAttacking) return;
-
+        // Si aún está en cooldown, no puede atacar
         if (Time.time < nextAttackTime) return;
 
         //daño
@@ -67,7 +71,7 @@ public class BossAttack : MonoBehaviour
 
             //ACTIVAR INVULNERABILIDAD
             enemy.SetInvulnerable(true);
-            Debug.Log("Boss INVULNERABLE");
+            
 
             //activar partículas
             if (invulParticles != null)
@@ -77,7 +81,7 @@ public class BossAttack : MonoBehaviour
 
             //DESACTIVAR INVULNERABILIDAD
             enemy.SetInvulnerable(false);
-            Debug.Log("Boss VULNERABLE");
+           
 
             //detener partículas
             if (invulParticles != null)

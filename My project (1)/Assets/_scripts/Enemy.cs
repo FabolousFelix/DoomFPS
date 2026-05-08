@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
     // Variable privada que indica si el enemigo(boss) es invulnerable
     private bool isInvulnerable = false;
 
+    public int pointsOnDeath;
+
     void Update()
     {
         // Llama constantemente a la función que revisa si el enemigo debe morir
@@ -24,7 +26,7 @@ public class Enemy : MonoBehaviour
         // Si el enemigo es invulnerable, no recibe daño
         if (isInvulnerable)
         {
-            Debug.Log("Enemigo invulnerable");// Mensaje en consola
+          
             return;// Sale de la función
         }
         // Muestra la vida actual en consola
@@ -45,6 +47,7 @@ public class Enemy : MonoBehaviour
         // Si la vida es menor o igual a 0
         if (health <= 0)
         {
+            ScoreManager.instance.AddScore(pointsOnDeath);
             // Notifica al EnemyManager que este enemigo debe eliminarse de la lista
             EnemyManager.instance.RemoveEnemy(this);
             // Destruye el objeto del enemigo en la escena

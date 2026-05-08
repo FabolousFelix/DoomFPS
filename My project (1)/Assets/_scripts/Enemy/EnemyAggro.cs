@@ -12,11 +12,14 @@ public class EnemyAggro : MonoBehaviour
     private PlayerHealth playerHealth;
     private void Start()
     {
+        // Busca al jugador en la escena
         if (playerTransform == null) playerTransform = FindAnyObjectByType<PlayerMovement>().transform;
+        // Obtiene el script de ataque del enemigo
         enemyAttack = GetComponentInChildren<EnemyAttack>();
+        // Obtiene el sistema de vida del jugador
         playerHealth = playerTransform.GetComponent<PlayerHealth>();
 
-        //acceder al boss basicamente lol
+        //acceder al boss basicamente
         bossAttack = GetComponent<BossAttack>();
         //animator = GetComponent<Animator>();
         isAggro = false;
@@ -27,9 +30,12 @@ public class EnemyAggro : MonoBehaviour
         //AnimationChange();
         EnemyDamage();
     }
+    // Calcula si el enemigo entra en modo aggro
     public void CheckEnemyAggro()
     {
+        // Distancia entre enemigo y jugador
         var dist = Vector3.Distance(transform.position, playerTransform.position);
+        // Si está lejos, no está en aggro
         if (dist > distanceToAggro)
         {
             isAggro = false;
