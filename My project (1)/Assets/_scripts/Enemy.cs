@@ -14,6 +14,10 @@ public class Enemy : MonoBehaviour
 
     public int pointsOnDeath;
 
+    [Header("Resistencias")]
+    public bool resistantToPhysical;
+    public bool resistantToMagic;
+
     void Update()
     {
         // Llama constantemente a la función que revisa si el enemigo debe morir
@@ -21,12 +25,12 @@ public class Enemy : MonoBehaviour
     }
 
     // Función pública para aplicar daño al enemigo
-    public void Damage(float damage, Quaternion rot)
+    public void Damage(float damage, DamageType damageType, Quaternion rot)
     {
         // Si el enemigo es invulnerable, no recibe daño
         if (isInvulnerable)
         {
-          
+
             return;// Sale de la función
         }
         // Muestra la vida actual en consola
@@ -34,8 +38,23 @@ public class Enemy : MonoBehaviour
 
         // Reproduce un sonido de daño usando un AudioManager (patrón singleton)
         AudioManager.instance.PlayEnemyDamage();
+
+        float finalDamage = damage;
+
+        if (damageType == DamageType.Physical && resistantToPhysical)
+        {
+            finalDamage *= 0.5f;
+            Debug.Log("Resistencia física");
+        }
+
+        if (damageType == DamageType.Magic && resistantToMagic)
+        {
+            finalDamage *= 0.5f;
+            Debug.Log("Resistencia Mágica");
+        }
+
         // Resta el daño recibido a la vida del enemigo
-        health -= damage;
+        health -= finalDamage;
         // Instancia el efecto de sangre en la posición del enemigo con la rotación recibida
         GameObject gunEffect = Instantiate(blood, transform.position, rot);
         // Destruye el efecto después de 0.5 segundos para no saturar la escena
