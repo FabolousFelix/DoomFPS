@@ -33,6 +33,14 @@ public class EnemyAggro : MonoBehaviour
     // Calcula si el enemigo entra en modo aggro
     public void CheckEnemyAggro()
     {
+
+        PlayerPowerUps powerUps = playerTransform.GetComponent<PlayerPowerUps>();
+
+        if (powerUps != null && powerUps.isInvisible)
+        {
+            isAggro = false;
+            return;
+        }
         // Distancia entre enemigo y jugador
         var dist = Vector3.Distance(transform.position, playerTransform.position);
         // Si está lejos, no está en aggro

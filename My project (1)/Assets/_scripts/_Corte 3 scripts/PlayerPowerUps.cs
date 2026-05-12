@@ -12,8 +12,22 @@ public class PlayerPowerUps : MonoBehaviour
     private float originalSpeed;
     private int originalDamage;
 
+    [Header("Invisibilidad")]
+    public bool hasInvisibility = false;
+    public float invisDuration;
 
-    
+    public Renderer playerRenderer;
+
+    public bool isInvisible;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ActivateInvisibility();
+        }
+    }
+
     void Start()
     {
         
@@ -24,6 +38,15 @@ public class PlayerPowerUps : MonoBehaviour
     public void ActivateBoost(float speedMultiplier, float damageMultiplier, float duration)
     {
         StartCoroutine(BoostCoroutine(speedMultiplier, damageMultiplier,duration));
+    }
+
+    public void ActivateInvisibility()
+    {
+        if (hasInvisibility)
+        {
+            StartCoroutine(InvisibilityCoroutine());
+            hasInvisibility = false;
+        }
     }
 
     IEnumerator BoostCoroutine(float speedMult, float damageMult, float duration)
@@ -39,5 +62,26 @@ public class PlayerPowerUps : MonoBehaviour
 
         Debug.Log("Boost Terminado");
     }
-        
+
+    IEnumerator InvisibilityCoroutine()
+    {
+        Debug.Log("INVISIBLE");
+
+        isInvisible = true;
+
+        //ocultar visualmente
+        if (playerRenderer != null)
+            playerRenderer.enabled = false;
+
+        yield return new WaitForSeconds(invisDuration);
+
+        isInvisible = false;
+
+        // volver visible
+        if (playerRenderer != null)
+            playerRenderer.enabled = true;
+
+        Debug.Log("VISIBLE OTRA VEZ");
+    }
+
 }
