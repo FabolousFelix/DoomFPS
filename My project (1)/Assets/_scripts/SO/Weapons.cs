@@ -8,6 +8,10 @@ using UnityEngine;
 // Clase ScriptableObject que define los datos de un arma
 public class Weapons : ScriptableObject
 {
+
+    [Header("tipo de daño")]
+    public DamageType damageType;
+
     [Tooltip("Distancia de disparo")]
     //rango
     public float range;

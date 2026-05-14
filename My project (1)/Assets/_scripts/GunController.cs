@@ -128,7 +128,7 @@ public class GunController : MonoBehaviour
                     if (hit.transform == enemy.transform)
                     {
                         Quaternion rot = Quaternion.LookRotation(-hit.normal);
-                        enemy.Damage(weapon.damage, rot);
+                        enemy.Damage(weapon.damage,weapon.damageType, rot);
                     }
 
                     Debug.DrawRay(transform.position, dir * weapon.range, Color.green, 1f);
