@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio; // Necesario para AudioMixer
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class AudioManager : MonoBehaviour
     private AudioSource SFXSource;   // Efectos de sonido
     private AudioSource musicSource; // Música de fondo (nuevo)
 
+    // Opcional: prefab para pool de SFX y tamaño del pool
+    [Header("Pool SFX (opcional)")]
+    [SerializeField] private AudioSource sfxSourcePrefab;
+    [SerializeField] private int sfxPoolSize = 8;
+    private List<AudioSource> sfxPool = new List<AudioSource>();
+
     // Clips de sonido existentes
     public AudioClip enemyDamage;
 
@@ -26,6 +33,10 @@ public class AudioManager : MonoBehaviour
     private float masterVolume = 1f;
     private float musicVolume = 1f;
     private float sfxVolume = 1f;
+
+    // Grupos del AudioMixer (si existen)
+    private AudioMixerGroup musicGroup;
+    private AudioMixerGroup sfxGroup;
 
     private void Awake()
     {
@@ -56,6 +67,36 @@ public class AudioManager : MonoBehaviour
         // Configurar la música para que suene en bucle por defecto
         musicSource.loop = true;
         musicSource.playOnAwake = false;
+
+        // Si hay AudioMixer, buscar grupos expuestos por nombre
+        if (audioMixer != null)
+        {
+            var musicGroups = audioMixer.FindMatchingGroups("Music");
+            var sfxGroups = audioMixer.FindMatchingGroups("SFX");
+
+            if (musicGroups != null && musicGroups.Length > 0) musicGroup = musicGroups[0];
+            if (sfxGroups != null && sfxGroups.Length > 0) sfxGroup = sfxGroups[0];
+        }
+
+        // Asignar grupos si existen
+        if (musicSource != null && musicGroup != null)
+            musicSource.outputAudioMixerGroup = musicGroup;
+
+        if (SFXSource != null && sfxGroup != null)
+            SFXSource.outputAudioMixerGroup = sfxGroup;
+
+        // Crear pool de SFX si se proporcionó un prefab
+        if (sfxSourcePrefab != null)
+        {
+            for (int i = 0; i < sfxPoolSize; i++)
+            {
+                var src = Instantiate(sfxSourcePrefab, transform);
+                src.playOnAwake = false;
+                if (sfxGroup != null)
+                    src.outputAudioMixerGroup = sfxGroup;
+                sfxPool.Add(src);
+            }
+        }
 
         // Cargar volúmenes guardados y aplicarlos al mezclador
         CargarVolumenes();
@@ -128,10 +169,33 @@ public class AudioManager : MonoBehaviour
     // --- Métodos para reproducir sonidos (los que ya tenías) ---
     public void PlayEnemyDamage()
     {
-        PlayAudio(enemyDamage);
+        PlaySFX(enemyDamage);
     }
 
-    // Método base para reproducir efectos en el AudioSource de SFX
+    // Reproduce un SFX: usa pool si existe, sino PlayOneShot en SFXSource
+    public void PlaySFX(AudioClip clip, float volume = 1f)
+    {
+        if (clip == null) return;
+
+        // Usar pool cuando esté disponible
+        if (sfxPool != null && sfxPool.Count > 0)
+        {
+            var src = GetAvailableSFXSource();
+            if (src == null) return;
+            src.clip = clip;
+            src.volume = Mathf.Clamp01(volume);
+            src.loop = false;
+            src.Play();
+        }
+        else
+        {
+            // Fallback simple
+            if (SFXSource != null)
+                SFXSource.PlayOneShot(clip, Mathf.Clamp01(volume));
+        }
+    }
+
+    // Método base para reproducir efectos en el AudioSource de SFX (conservado para compatibilidad)
     private void PlayAudio(AudioClip clip)
     {
         if (clip != null && SFXSource != null)
@@ -150,5 +214,13 @@ public class AudioManager : MonoBehaviour
     {
         if (musicSource != null)
             musicSource.Stop();
+    }
+
+    // Obtiene una fuente libre del pool o la primera si están ocupadas
+    private AudioSource GetAvailableSFXSource()
+    {
+        foreach (var s in sfxPool)
+            if (!s.isPlaying) return s;
+        return sfxPool.Count > 0 ? sfxPool[0] : null;
     }
 }
