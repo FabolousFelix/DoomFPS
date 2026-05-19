@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [HideInInspector] public float originalSpeed;
     // Referencia a script de input personalizado
     private OldInput _oldInput;
     // Referencia al CharacterController 
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        originalSpeed = speed;
         // Obtiene el script de input del mismo objeto
         _oldInput = GetComponent<OldInput>();
         // Obtiene el CharacterController
