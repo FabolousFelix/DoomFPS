@@ -58,9 +58,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         pausePanel.SetActive(false);
-        // Llamar al GameManager para que muestre el menú principal y resetee el estado
+        // Llamar al GameManager para que recargue la escena (reinicia enemigos y estado) y muestre el menú principal
         if (gameManager != null)
-            gameManager.VolverAlMenuPrincipal();
+            gameManager.VolverAlMenuPrincipalConReinicio();
     }
 
     // Botón "Salir" - reutiliza el método de GameManager

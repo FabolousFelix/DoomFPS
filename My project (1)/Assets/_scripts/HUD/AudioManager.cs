@@ -46,8 +46,9 @@ public class AudioManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (instance != this)
         {
+            // Ya existe una instancia diferente: destruir este gameObject duplicado
             Destroy(gameObject);
             return;
         }
