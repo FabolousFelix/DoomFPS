@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     // Referencia a un prefab (efecto de sangre)
     public GameObject blood;
 
+    // Clip de sonido de daño (asignar en el Inspector)
+    public AudioClip damageClip;
+
     // Variable privada que indica si el enemigo(boss) es invulnerable
     private bool isInvulnerable = false;
 
@@ -36,8 +39,11 @@ public class Enemy : MonoBehaviour
         // Muestra la vida actual en consola
         Debug.Log("VIDA ACTUAL: " + health);
 
-        // Reproduce un sonido de daño usando un AudioManager (patrón singleton)
-        AudioManager.instance.PlayEnemyDamage();
+        // Reproduce un sonido de daño usando AudioManager en el canal SFX
+        if (damageClip != null)
+            AudioManager.instance.PlaySFX(damageClip);
+        else
+            AudioManager.instance.PlayEnemyDamage(); // fallback si usa método sin clip
 
         float finalDamage = damage;
 
