@@ -26,6 +26,10 @@ public class GunController : MonoBehaviour
     private int currentReserve;
     private bool isReloading;
 
+    // Propiedades públicas de solo lectura para el HUD
+    public int CurrentAmmo { get { return currentAmmo; } }
+    public int CurrentReserve { get { return currentReserve; } }
+
     void Awake()
     {
         if (instance == null)
