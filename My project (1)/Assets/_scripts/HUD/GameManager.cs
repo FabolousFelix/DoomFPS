@@ -1,14 +1,32 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[DisallowMultipleComponent]
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     public GameObject menuPrincipalPanel;
     public GameObject menuOpcionesPanel;
     public GameObject jugador;
-    public PauseMenu pauseMenu;  // Arrastra el objeto que tiene el script PauseMenu
+    public PauseMenu pauseMenu;
     public EndGameTrigger endGameTrigger;
     private bool juegoIniciado = false;
+
+    void Awake()
+    {
+        // Singleton: conservar la primera instancia y eliminar duplicados creados en runtime
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // elimina clones recién creados
+            return;
+        }
+    }
 
     void Start()
     {
@@ -16,9 +34,8 @@ public class GameManager : MonoBehaviour
         menuPrincipalPanel.SetActive(true);
         menuOpcionesPanel.SetActive(false);
         if (jugador != null)
-            jugador.GetComponent<PlayerMovement>().enabled = false; // Ajusta según tu controlador
+            jugador.GetComponent<PlayerMovement>().enabled = false;
 
-        // Asegurar que el menú de pausa esté oculto
         if (pauseMenu != null)
         {
             pauseMenu.pausePanel.SetActive(false);
@@ -36,7 +53,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // Aquí podrías agregar lógica para detectar si el jugador muere y mostrar el menú de muerte, etc.
         UpdatePortrait();
     }
 
@@ -145,7 +161,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+        Application.Quit();
 #endif
     }
 }

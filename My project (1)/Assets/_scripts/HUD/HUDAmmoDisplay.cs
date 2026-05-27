@@ -12,7 +12,7 @@ public class HUDAmmoDisplay : MonoBehaviour
 
         if (GunController.instance == null)
         {
-            ammoText.text = "Ammo: -- / --";
+            ammoText.text = "-- / --";
             return;
         }
 
