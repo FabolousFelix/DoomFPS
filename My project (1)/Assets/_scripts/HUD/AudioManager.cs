@@ -43,8 +43,8 @@ public class AudioManager : MonoBehaviour
         // Singleton y persistencia entre escenas
         if (instance == null)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (instance != this)
+                DontDestroyOnLoad(gameObject);
         }
         else
         {
