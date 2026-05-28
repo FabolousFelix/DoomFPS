@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 8305639419436095710}
   - component: {fileID: 1969869909377912561}
   - component: {fileID: 389419993489537457}
+  - component: {fileID: 7321986093608010061}
   m_Layer: 3
   m_Name: Enemy ranged with animations
   m_TagString: Enemy
@@ -180,12 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a4d78d528f8ca4cbce65dd604fa7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   blood: {fileID: 3845928707943772322, guid: 3e13c4604c5bd74449a4bfb5359fe108, type: 3}
   damageClip: {fileID: 8300000, guid: 2db596df50b372447afa7967fd6976b7, type: 3}
   pointsOnDeath: 15
-  resistantToPhysical: 1
-  resistantToMagic: 0
+  resistantToPhysical: 0
+  resistantToMagic: 1
 --- !u!114 &3863830734806674889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1851026913449913574, guid: b28c7df6335d94748a3e24d03910aee5,
     type: 3}
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 9105945741344950647}
   fireRate: 2
   attackRange: 10
   nextFireTime: 2
@@ -333,6 +334,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAttacking: 0
   damage: 15
+--- !u!114 &7321986093608010061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279636226382286697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3804c7e35fbd04f949b3b081b3bc38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatHeight: 1
+  floatSpeed: 2
 --- !u!1001 &1192867007244661502
 PrefabInstance:
   m_ObjectHideFlags: 0

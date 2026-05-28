@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class SlowZone : MonoBehaviour
 {
-
     public float slowMultiplier;
-     
+
+    public SlowVisualEffects slowEffect;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            PlayerMovement movement = other.GetComponent<PlayerMovement>();
+            PlayerMovement movement =
+                other.GetComponent<PlayerMovement>();
 
             if (movement != null)
             {
-                movement.speed = movement.originalSpeed * slowMultiplier;
+                movement.speed =
+                    movement.originalSpeed * slowMultiplier;
             }
 
+            slowEffect.EnableEffect();
         }
     }
 
@@ -25,12 +29,16 @@ public class SlowZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerMovement movement = other.GetComponent<PlayerMovement>();
+            PlayerMovement movement =
+                other.GetComponent<PlayerMovement>();
 
             if (movement != null)
             {
-                movement.speed = movement.originalSpeed;
+                movement.speed =
+                    movement.originalSpeed;
             }
+
+            slowEffect.DisableEffect();
         }
     }
 }
