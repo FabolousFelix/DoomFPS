@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wand
   m_EditorClassIdentifier: 
   damageType: 0
-  range: 10
+  range: 4
   verticalRange: 7
   horizontalRange: 4
   fireRate: 0.8

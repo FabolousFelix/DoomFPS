@@ -13,10 +13,13 @@ public class EnemyAttackRanged : MonoBehaviour
 
     private Transform player;
 
+    private Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
-      player = FindAnyObjectByType<PlayerMovement>().transform;  
+      player = FindAnyObjectByType<PlayerMovement>().transform;
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -26,7 +29,7 @@ public class EnemyAttackRanged : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, player.position);
 
-
+        anim.SetTrigger("Attack");
         if (dist <= attackRange && Time.time >= nextFireTime)
         {
             Shoot();
