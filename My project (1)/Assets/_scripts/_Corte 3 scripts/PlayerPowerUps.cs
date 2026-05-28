@@ -69,6 +69,9 @@ public class PlayerPowerUps : MonoBehaviour
 
         isInvisible = true;
 
+        // ACTIVAR EFECTO VISUAL
+        InvisibilityVisualEffect.instance.EnableEffect();
+
         //ocultar visualmente
         if (playerRenderer != null)
             playerRenderer.enabled = false;
@@ -77,11 +80,17 @@ public class PlayerPowerUps : MonoBehaviour
 
         isInvisible = false;
 
+        // DESACTIVAR EFECTO VISUAL
+        InvisibilityVisualEffect.instance.DisableEffect();
+
         // volver visible
         if (playerRenderer != null)
             playerRenderer.enabled = true;
 
         Debug.Log("VISIBLE OTRA VEZ");
     }
-
 }
+
+
+
+

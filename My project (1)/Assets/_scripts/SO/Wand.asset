@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Wand
   m_EditorClassIdentifier: 
   damageType: 0
-  range: 4
+  range: 10
   verticalRange: 7
   horizontalRange: 4
   fireRate: 0.8
-  damage: 25
+  damage: 20
   weaponPrefab: {fileID: 6243050051830232095, guid: fd443ec7ac9988645a0756e580aaf434,
     type: 3}
   sound: {fileID: 8300000, guid: c67f5e43cee2c4c44b4618b04bb2db28, type: 3}
-  maxAmmo: 40
-  maxReserve: 60
-  reloadTime: 5
+  maxAmmo: 15
+  maxReserve: 20
+  reloadTime: 3

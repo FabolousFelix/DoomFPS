@@ -6,12 +6,18 @@ public class AmmoPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //detecta al player
+        // detecta al player
         if (other.CompareTag("Player"))
         {
-            //añade la municion despus de recogerla
-            GunController.instance.AddAmmo(ammoAmount);
-            Destroy(gameObject);
+            // intenta añadir munición
+            bool pickedUp =
+                GunController.instance.AddAmmo(ammoAmount);
+
+            // solo destruir si sí recogió munición
+            if (pickedUp)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
