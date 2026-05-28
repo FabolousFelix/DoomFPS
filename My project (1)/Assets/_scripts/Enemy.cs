@@ -17,9 +17,16 @@ public class Enemy : MonoBehaviour
 
     public int pointsOnDeath;
 
+    private Animator animator;
+
     [Header("Resistencias")]
     public bool resistantToPhysical;
     public bool resistantToMagic;
+
+    void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
 
     void Update()
     {
@@ -30,20 +37,23 @@ public class Enemy : MonoBehaviour
     // Función pública para aplicar daño al enemigo
     public void Damage(float damage, DamageType damageType, Quaternion rot)
     {
-        // Si el enemigo es invulnerable, no recibe daño
+        Debug.Log("ENTRÓ A DAMAGE");
+
         if (isInvulnerable)
         {
-
-            return;// Sale de la función
+            return;
         }
-        // Muestra la vida actual en consola
+
         Debug.Log("VIDA ACTUAL: " + health);
 
-        // Reproduce un sonido de daño usando AudioManager en el canal SFX
-        if (damageClip != null)
-            AudioManager.instance.PlaySFX(damageClip);
-        else
-            AudioManager.instance.PlayEnemyDamage(); // fallback si usa método sin clip
+        //audio seguro
+        if (AudioManager.instance != null)
+        {
+            if (damageClip != null)
+                AudioManager.instance.PlaySFX(damageClip);
+            else
+                AudioManager.instance.PlayEnemyDamage();
+        }
 
         float finalDamage = damage;
 
@@ -56,17 +66,26 @@ public class Enemy : MonoBehaviour
         if (damageType == DamageType.Magic && resistantToMagic)
         {
             finalDamage *= 0.5f;
-            Debug.Log("Resistencia Mágica");
+            Debug.Log("Resistencia mágica");
         }
 
-        // Resta el daño recibido a la vida del enemigo
         health -= finalDamage;
-        // Instancia el efecto de sangre en la posición del enemigo con la rotación recibida
-        GameObject gunEffect = Instantiate(blood, transform.position, rot);
-        // Destruye el efecto después de 0.5 segundos para no saturar la escena
-        Destroy(gunEffect, 0.5f);
-    }
 
+        Debug.Log(
+            "Tipo: " + damageType +
+            " | Daño Base: " + damage +
+            " | Daño Final: " + finalDamage +
+            " | Vida restante: " + health);
+
+        //sangre segura
+        if (blood != null)
+        {
+            GameObject gunEffect =
+                Instantiate(blood, transform.position, rot);
+
+            Destroy(gunEffect, 0.5f);
+        }
+    }
     public void EnemyDeath()
     {
         // Si la vida es menor o igual a 0
@@ -75,6 +94,8 @@ public class Enemy : MonoBehaviour
             ScoreManager.instance.AddScore(pointsOnDeath);
             // Notifica al EnemyManager que este enemigo debe eliminarse de la lista
             EnemyManager.instance.RemoveEnemy(this);
+
+            animator.SetTrigger("Death");
             // Destruye el objeto del enemigo en la escena
             Destroy(gameObject);
         }

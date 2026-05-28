@@ -21,7 +21,7 @@ public class EnemyAggro : MonoBehaviour
 
         //acceder al boss basicamente
         bossAttack = GetComponent<BossAttack>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         isAggro = false;
     }
     private void Update()
@@ -57,6 +57,8 @@ public class EnemyAggro : MonoBehaviour
     {
         if (enemyAttack.isAttacking && Time.time >= nextAttackTime)
         {
+            animator.SetTrigger("Attack");
+
             //si es boss usa su propio ataque
             if (bossAttack != null)
             {
@@ -64,12 +66,10 @@ public class EnemyAggro : MonoBehaviour
             }
             else
             {
-                // enemigo normal con cambios a enemy attack pq la cague con el codigo de playerhealth xd
                 playerHealth.TakeDamage(enemyAttack.damage);
             }
 
             nextAttackTime = Time.time + attackCooldown;
         }
-        /* public void AnimationChange() { animator.SetBool("isChasing", isAggro); } */
     }
 }

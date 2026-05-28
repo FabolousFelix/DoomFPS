@@ -16,6 +16,6 @@ public class HUDAmmoDisplay : MonoBehaviour
             return;
         }
 
-        ammoText.text = string.Format("Ammo: {0} / {1}", GunController.instance.CurrentAmmo, GunController.instance.CurrentReserve);
+        ammoText.text = string.Format("{0} / {1}", GunController.instance.CurrentAmmo, GunController.instance.CurrentReserve);
     }
 }
