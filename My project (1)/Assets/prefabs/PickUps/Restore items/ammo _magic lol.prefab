@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1364942634842472734}
   - component: {fileID: 3434146527754706190}
   - component: {fileID: 7862337412078015540}
+  - component: {fileID: -2033933065273289510}
   m_Layer: 0
   m_Name: ammo _magic lol
   m_TagString: Untagged
@@ -142,3 +143,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoAmount: 10
+--- !u!114 &-2033933065273289510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061882283319579891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba749e409b1d25348a009a8565b248ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: 'You found somel ammo
+
+    You can reload with "R" if needed'
+  messageDuration: 3

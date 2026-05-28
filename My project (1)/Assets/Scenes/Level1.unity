@@ -14365,7 +14365,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo _magic lol
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2033933065273289510, guid: 1803196a108963443ae6fa54218b9701, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -41366,7 +41367,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo _magic lol (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2033933065273289510, guid: 1803196a108963443ae6fa54218b9701, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -81906,7 +81908,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo _magic lol (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2033933065273289510, guid: 1803196a108963443ae6fa54218b9701, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -275587,6 +275590,7 @@ Transform:
   - {fileID: 1756883404}
   - {fileID: 728103140}
   - {fileID: 480909969}
+  - {fileID: 1704833135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1650418825
@@ -284024,6 +284028,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1704607727}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1704833134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1704833135}
+  - component: {fileID: 1704833137}
+  - component: {fileID: 1704833136}
+  m_Layer: 0
+  m_Name: Idk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1704833135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704833134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.387, y: -1.081, z: 0.009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1649129927}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1704833136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704833134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba749e409b1d25348a009a8565b248ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: Some enemies might be a little more tough depending on your weapon type
+  messageDuration: 3
+--- !u!65 &1704833137
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704833134}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.95674163, y: 0.52799827, z: 0.3093595}
+  m_Center: {x: 0.4480076, y: -0.027880926, z: 0.24058442}
 --- !u!1001 &1705066830
 PrefabInstance:
   m_ObjectHideFlags: 0
